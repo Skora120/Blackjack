@@ -1,2 +1,4 @@
 .idea
 venv
+.blackjack/__pycache__
+*.pyc
