@@ -6,4 +6,4 @@ class Card:
         self.face = face
 
     def __str__(self):
-        return "Figure: {}, Colour: {}, Value: {}".format(self.figure, self.colour, self.face, self.value)
+        return "Figure: {}, Colour: {}, Face: {}, Value: {}".format(self.figure, self.colour, self.face, self.value)
