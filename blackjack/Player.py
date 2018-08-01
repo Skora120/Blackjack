@@ -4,6 +4,7 @@ class Player:
         self.hand = list()
         self.bet_amount = 0
         self.insurance = False
+        self.is_surrender = False
 
     def add_card(self, card, deck):
         if card.value == 0:
@@ -71,7 +72,7 @@ class Player:
                 self.hit(table)
 
     def surrender(self):
-        self.amount = int(self.bet_amount / 2)
+        self.amount += int(self.bet_amount / 2)
 
     def double_down(self, table):
         self.add_card(table.deck.cards.pop(), table.deck)

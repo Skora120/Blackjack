@@ -45,36 +45,39 @@ class Table:
             self.player.amount += self.player.bet_amount * 2
             self.player.insurance = False
 
-        if self.player.total() == self.croupier.total() and self.player.total() < 21:
-            self.player.amount += self.player.bet_amount
-            self.player.bet_amount = 0
-            print('Push - bets returned')
+        if self.player.is_surrender == False:
+            if self.player.total() == self.croupier.total() and self.player.total() < 21:
+                self.player.amount += self.player.bet_amount
+                self.player.bet_amount = 0
+                print('Push - bets returned')
 
-        elif self.player.total() > 21:
-            print('Player lost: {}'.format(self.player.bet_amount))
-            self.player.bet_amount = 0
-
-        elif self.croupier.total() > 21:
-            winning = 0
-            if self.player.total() == 21 and 11 in self.player.hand and 10 in self.player.hand:
-                winning = int(self.player.bet_amount * 2.5)
-                self.player.amount += winning
+            elif self.player.total() > 21:
+                print('Player lost: {}'.format(self.player.bet_amount))
                 self.player.bet_amount = 0
 
-            elif self.player.total() <= 21:
-                winning = self.player.bet_amount
-                self.player.amount += winning * 2
+            elif self.croupier.total() > 21:
+                winning = 0
+                if self.player.total() == 21 and 11 in self.player.hand and 10 in self.player.hand:
+                    winning = int(self.player.bet_amount * 2.5)
+                    self.player.amount += winning
+                    self.player.bet_amount = 0
+
+                elif self.player.total() <= 21:
+                    winning = self.player.bet_amount
+                    self.player.amount += winning * 2
+                    self.player.bet_amount = 0
+
+                print('Player won: {}'.format(winning))
+            elif self.croupier.total() > self.player.total():
+                print('Player lost: {}'.format(self.player.bet_amount))
                 self.player.bet_amount = 0
 
-            print('Player won: {}'.format(winning))
-        elif self.croupier.total() > self.player.total():
-            print('Player lost: {}'.format(self.player.bet_amount))
-            self.player.bet_amount = 0
-
+            else:
+                print('Player won: '.format(self.player.bet_amount))
+                self.player.amount += self.player.bet_amount
+                self.player.bet_amount = 0
         else:
-            print('Player won: '.format(self.player.bet_amount))
-            self.player.amount += self.player.bet_amount
-            self.player.bet_amount = 0
+            self.player.is_surrender = False
 
         self.player.clear_hand(self.deck)
         self.croupier.clear_hand(self.deck)
@@ -119,6 +122,7 @@ class Table:
                             break
                         elif choose == 4:
                             self.player.surrender()
+                            self.player.is_surrender = True
                             break
                         elif choose == 5:
                             break
