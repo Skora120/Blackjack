@@ -16,7 +16,7 @@ class Player:
 
     def clear_hand(self, deck):
         for card in self.hand:
-            deck.cards.append(card)
+            deck.cards.insert(0, card)
         self.hand.clear()
 
     def total(self):
@@ -57,7 +57,7 @@ class Player:
         print('\'1\' Stand \n\'3\' Hit \n')
         while self.total() < 21:
             try:
-                input_value = int(input(""))
+                input_value = int(input("Choose: "))
             except ValueError:
                 print("Please enter value.")
                 continue
@@ -66,7 +66,7 @@ class Player:
                     continue
 
             if input_value == 1:
-                   break
+                    break
             else:
                 table.draw()
                 self.hit(table)
